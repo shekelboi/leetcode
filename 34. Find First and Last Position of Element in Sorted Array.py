@@ -1,14 +1,20 @@
 def searchRange(nums, target):
-    minimum = -1
-    maximum = -1
-    for i, n in enumerate(nums):
-        if n == target:
-            if minimum == -1:
-                minimum = i
-            maximum = i
-    return [minimum, maximum]
+    found = False
+
+    left_pointer = 0
+    right_pointer = len(nums) - 1
+    index = 0
+    while not found:
+        index = (left_pointer + right_pointer) // 2
+        if nums[index] == target:
+            found = True
+        elif nums[index] < target:
+            left_pointer = index + 1
+        elif nums[index] > target:
+            right_pointer = index - 1
+    return index
 
 
-nums = [5, 7, 7, 8, 8, 10]
-target = 8
+nums = [3, 4, 6, 8, 9, 10, 13, 15, 16]
+target = 3
 print(searchRange(nums, target))
