@@ -1,21 +1,27 @@
 import re
 
+INT_MIN = -(2 ** 31) - 1
 INT_MAX = 2 ** 31 - 1
-INT_MIN = -2 ** 31
 
 
 def myAtoi(s):
-    res = re.search(r"([a-zA-Z]*)( *)(\-*[0-9]+)", s).groups()
-    if res[0] is not "":
+    match = re.search(r"(?P<characters>[^\s\d\-+]*)\s*(?P<sign>[-+]*)(?P<whitespace_after_sign>\s)*(?P<digits>\d+)", s)
+    if match is None or match.group("digits") is None or (
+            match.group("sign") is not None and len(match.group("sign")) > 1) or (match.group(
+        "characters") is not None and match.group("characters") != "") or (
+            "whitespace_after_sign" in match.groupdict() and match.group("whitespace_after_sign") is not None):
         return 0
-    else:
-        res = int(res[2])
-        if res > INT_MAX:
-            return INT_MAX
-        elif res < INT_MIN:
-            return INT_MIN
-        else:
-            return res
+
+    digits = int(match.group("digits"))
+    if match.group("sign") is not None and match.group("sign") == "-":
+        digits *= -1
+
+    if digits > INT_MAX:
+        return INT_MAX
+    elif digits < INT_MIN:
+        return INT_MIN
+
+    return digits
 
 
-print(myAtoi("+-42"))
+print(myAtoi("42"))
