@@ -6,13 +6,10 @@ def containsNearbyDuplicate(nums, k):
     frequencies = {}
 
     for i, n in enumerate(nums):
-        if n not in frequencies:
-            frequencies[n] = i
-        else:
-            if i - frequencies[n] <= k:
-                return True
-            else:
-                frequencies[n] = i
+        if n in frequencies and i - frequencies[n] <= k:
+            return True
+        frequencies[n] = i
+
     return False
 
 
