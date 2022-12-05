@@ -2,8 +2,7 @@ import re
 
 
 def lengthOfLastWord(s):
-    res = re.search(r"(\w*)\s*$", s)
-    return res.group(1)
+    return len(s.split()[-1])
 
 
 s = "   fly me   to   the moon  "
