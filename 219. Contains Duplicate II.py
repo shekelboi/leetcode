@@ -1,20 +1,18 @@
 def containsNearbyDuplicate(nums, k):
+    # We should add the index where a number occurs to the dictionary
+    # Next time the same number occurs, we should check if the distance is smaller than k
+    # If it is, then return true
+    # Else we add the current index of the item
     frequencies = {}
 
-    for n in nums:
-        if n not in frequencies.keys():
-            frequencies[n] = 1
-        else:
-            frequencies[n] += 1
+    for i, n in enumerate(nums):
+        if n in frequencies and i - frequencies[n] <= k:
+            return True
+        frequencies[n] = i
 
-    for i in range(len(nums) - 1):
-        if frequencies[nums[i]] == 2:
-            for j in range(i + 1, len(nums)):
-                if abs(i - j) <= k and nums[i] == nums[j]:
-                    return True
     return False
 
 
-nums = [1, 2, 3, 1]
-k = 3
+nums = [1, 0, 1, 1]
+k = 1
 print(containsNearbyDuplicate(nums, k))
