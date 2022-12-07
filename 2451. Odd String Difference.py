@@ -1,20 +1,19 @@
 def oddString(words):
-    difference_arr = []
-    for word in words:
-        difference = []
-        for i in range(1, len(words[0])):
-            difference.append(ord(word[i]) - ord(word[i - 1]))
-        difference_arr.append(tuple(difference))
+    for i in range(1, len(words[0])):
+        occurences = []
+        for j, word in enumerate(words):
+            diff = ord(word[i]) - ord(word[i - 1])
+            found = False
+            for o in occurences:
+                if o[0] == diff:
+                    o[1] += 1
+                    found = True
+            if not found:
+                occurences.append([diff, 1, j])
 
-    occurences = {}
-    for diff in difference_arr:
-        if diff not in occurences:
-            occurences[diff] = 1
-        else:
-            occurences[diff] += 1
-
-    unique = [k for (k, v) in occurences.items() if v == 1][0]
-    return words[difference_arr.index(unique)]
+        for o in occurences:
+            if o[1] == 1:
+                return words[o[2]]
 
 
 words = ["adc", "wzy", "abc"]
