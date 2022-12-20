@@ -5,12 +5,9 @@ def longestConsecutive(nums):
     for n in nums:
         if n not in sequence_dict:
             sequence_dict[n] = 1
-            if n + 1 in sequence_dict:
+            if n + 1 in sequence_dict and sequence_dict[n + 1] is not None:
                 sequence_dict[n] += sequence_dict[n + 1]
-                del sequence_dict[n + 1]
-            if n - 1 in sequence_dict:
-                sequence_dict[n - 1] = sequence_dict[n] + 1
-                del sequence_dict[n]
+                sequence_dict[n + 1] = None
 
     for k, v in sequence_dict.items():
         while v is not None and k + v in sequence_dict and sequence_dict[k + v] is not None:
