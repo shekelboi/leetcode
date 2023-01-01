@@ -10,5 +10,19 @@ def mySqrt(x):
         i += 1
 
 
-x = 8
-print(mySqrt(x))
+def my_sqrt_two_pointers(x):
+    left, right = 0, 2 ** 32
+    while left < right:
+        mid = (left + right) // 2
+        # print(f"{left} {mid} {right}")
+        res = mid ** 2
+        if res == x or left == mid:
+            return mid
+        elif res < x:
+            left = mid
+        elif res > x:
+            right = mid
+
+
+x = 15
+print(my_sqrt_two_pointers(x))
