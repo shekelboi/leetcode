@@ -18,8 +18,7 @@ def find_max_k_optimized(nums):
             val = abs(n)
             if val > max_num:
                 max_num = val
-            nums_set.remove(inverse)
-
+            nums_set.remove(inverse)  # Actually optional, just to keep it clear
     return max_num
 
 
