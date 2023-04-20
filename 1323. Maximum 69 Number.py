@@ -1,7 +1,20 @@
+from math import log10, floor
+
+
 def maximum69Number(num: int) -> int:
-    n_string = str(num)
-    for i in range(len(n_string)):
-        if n_string[i] == '6':
-            n_string = n_string[:i] + '9' + n_string[i + 1:]
+    number_of_digits = floor(log10(num))
+    original_number = num
+    while num > 0:
+        divisor = 10 ** number_of_digits
+        quotient = num // divisor
+
+        if quotient == 6:
+            original_number += 3 * divisor
             break
-    return int(n_string)
+
+        num %= divisor
+        number_of_digits -= 1
+    return original_number
+
+
+print(maximum69Number(9969))
