@@ -37,16 +37,13 @@ class Tree:
         self.__arr_to_tree(arr, node.right)
         pass
 
-    def in_order_traversal(self, node):
-        self.__in_order(node)
-        print()
-
-    def __in_order(self, node, ignore_none=True):
+    @staticmethod
+    def in_order_traversal(node, arr: [int], ignore_none=True):
         if node is not None:
-            self.__in_order(node.left)
+            Tree.in_order_traversal(node.left, arr)
             if not ignore_none or node.val is not None:
-                print(node.val, end=" ")
-            self.__in_order(node.right)
+                arr.append(node.val)
+            Tree.in_order_traversal(node.right, arr)
 
     def pre_order_traversal(self, node):
         self.__pre_order(node)
@@ -70,7 +67,6 @@ class Tree:
             if not ignore_none or node.val is not None:
                 print(node.val, end=" ")
 
-
-arr = [1, None, 2, 3]
-tree = Tree(arr)
-tree.in_order_traversal(tree.root)
+# arr = [1, None, 2, 3]
+# tree = Tree(arr)
+# tree.in_order_traversal(tree.root)
