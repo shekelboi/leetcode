@@ -7,6 +7,9 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def __str__(self):
+        return str(self.val)
+
 
 # The traversal algorithms seem to be correct
 class Tree:
@@ -45,6 +48,20 @@ class Tree:
             Tree.in_order_traversal(node.right, arr, ignore_none)
         elif not ignore_none:
             arr.append(None)
+
+    @staticmethod
+    def is_symmetric(node1: TreeNode, node2: TreeNode):
+        print(str(node1) + " " + str(node2))
+        if node1 is not None and node2 is not None:
+            if node1.val != node2.val:
+                return False
+            if not Tree.is_symmetric(node1.right, node2.left):
+                return False
+            if not Tree.is_symmetric(node1.left, node2.right):
+                return False
+        elif node1 != node2:
+            return False
+        return True
 
     @staticmethod
     def pre_order_traversal(node: TreeNode, arr: [int], ignore_none=True):
