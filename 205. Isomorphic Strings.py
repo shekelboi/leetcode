@@ -1,27 +1,28 @@
 def isIsomorphic(s: str, t: str) -> bool:
-    char_A = ord('A')
+    if len(s) != len(t):
+        return False
 
-    inputs = [s, t]
-    patterns = []
+    s_dict = dict()
+    t_dict = dict()
+    s_counter = 0
+    t_counter = 0
+    s_pattern = []
+    t_pattern = []
+    for i in range(len(s)):
+        if s[i] not in s_dict:
+            s_dict[s[i]] = s_counter
+            s_counter += 1
+        s_pattern.append(s_dict[s[i]])
 
-    for inp in inputs:
-        pattern_dict = dict()
-        counter = 0
-        pattern = ""
-        for c in inp:
-            if c in pattern_dict:
-                pattern += pattern_dict[c]
-            else:
-                new_symbol = chr(char_A + counter)
-                pattern_dict[c] = new_symbol
-                pattern += new_symbol
-                counter += 1
-        patterns.append(pattern)
+        if t[i] not in t_dict:
+            t_dict[t[i]] = t_counter
+            t_counter += 1
+        t_pattern.append(t_dict[t[i]])
 
-    return patterns[0] == patterns[1]
+    return s_pattern == t_pattern
 
 
-s = "egg"
-t = "add"
+s = "foo"
+t = "bar"
 
 print(isIsomorphic(s, t))
