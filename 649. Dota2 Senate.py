@@ -1,36 +1,44 @@
-def predictPartyVictory(senate: str) -> str:
-    def is_unique(arr):
-        s = set()
-        for n in arr:
-            s.add(n)
-            if len(s) > 1:
-                return False
-        return True
+def is_unique(arr):
+    s = set()
+    for n in arr:
+        s.add(n)
+        if len(s) > 1:
+            return False
+    return True
 
+
+def predictPartyVictory(senate):
     l = list(senate)
+    possibilities = []
+    find_possibilities(l.copy(), 0, possibilities)
 
-    def last_index(arr, text):
-        for i in reversed(range(len(arr))):
-            if arr[i] == text:
-                return i
-        return -1
+    print('Pos:')
+    print(possibilities)
 
-    while not is_unique(l):
-        counter = 0
-        print(l)
-        while counter < len(l):
-            remove_this = ''
-            if l[counter] == 'D':
-                remove_this = 'R'
+    # Check all the possibilities
+    # If there is a possibility that the first party wins, return with that party
+    # Otherwise return with the other party
+    return 'Radiant' if possibilities[0] == 'R' else 'Dire'
+
+
+def find_possibilities(l, position, possibilities):
+    if is_unique(l):
+        possibilities.append(l[0])
+        return
+    if position >= len(l):
+        position = 0
+
+    for i in range(len(l)):
+        # If different from the current one, it will be removed
+        if l[i] != l[position]:
+            c = l[:i] + l[i + 1:]
+            if i <= position:
+                next_pos = position
             else:
-                remove_this = 'D'
-            print(remove_this)
-            if remove_this in l:
-                index = last_index(l, remove_this)
-                l = l[:index] + l[index + 1:]
-            counter += 1
-    return 'Radiant' if l[0] == 'R' else 'Dire'
+                next_pos = position + 1
+            find_possibilities(c, next_pos, possibilities)
 
 
-inp = 'DRDRR'
+# inp = 'DRDRR'
+inp = 'RRRDDD'
 print(predictPartyVictory(inp))
