@@ -10,21 +10,31 @@ def is_unique(arr):
 def predictPartyVictory(senate):
     l = list(senate)
     possibilities = []
-    find_possibilities(l.copy(), 0, possibilities)
+    res = find_possibilities(l[0], l.copy(), 0, possibilities)
 
-    print('Pos:')
-    print(possibilities)
+    # print('RES', res)
+    # print('Pos:')
+    # print(possibilities)
 
     # Check all the possibilities
     # If there is a possibility that the first party wins, return with that party
     # Otherwise return with the other party
-    return 'Radiant' if possibilities[0] == 'R' else 'Dire'
+    d = {
+        'D': 'Dire',
+        'R': 'Radiant'
+    }
+    opp = {
+        'R': 'Dire',
+        'D': 'Radiant'
+    }
+    return d[l[0]] if res else opp[l[0]]
 
 
-def find_possibilities(l, position, possibilities):
+def find_possibilities(original, l, position, possibilities):
     if is_unique(l):
         possibilities.append(l[0])
-        return
+        if l[0] == original:
+            return True
     if position >= len(l):
         position = 0
 
@@ -36,9 +46,9 @@ def find_possibilities(l, position, possibilities):
                 next_pos = position
             else:
                 next_pos = position + 1
-            find_possibilities(c, next_pos, possibilities)
+            return find_possibilities(original, c, next_pos, possibilities)
 
 
 # inp = 'DRDRR'
-inp = 'RRRDDD'
+inp = 'DRRDRDRDRDDRDRDR'
 print(predictPartyVictory(inp))
